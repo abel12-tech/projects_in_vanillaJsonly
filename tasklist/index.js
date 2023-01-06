@@ -10,7 +10,9 @@ const form = document.querySelector('#task-form')
 const taskInput =document.querySelector('#task')
 const taskList = document.querySelector('.collection')
 const addTaskbtn =document.querySelector('.btn')
-
+const clearTask = document.querySelector('.clear-tasks')
+const filtered = document.querySelector('#filter')
+const display =document.querySelector('.display')
 
 // load all event listeners
 
@@ -18,8 +20,18 @@ loadAllEventListeners()
 
 
 function loadAllEventListeners(){
+    // Add task
     form.addEventListener('submit',addTask)
+    // Remove task from tasklist
+   taskList.addEventListener('click',removeTask)
+   // Delete all task at once
+   clearTask.addEventListener('click',deleteAllTask)
+   // filter task 
+   filtered.addEventListener('keyup',filterTask)
+   // display all task that is addes
+   display.addEventListener('click',displayAlltask)
 
+   
 }
 function addTask(e){
         if(taskInput.value === ''){
@@ -40,7 +52,6 @@ function addTask(e){
 
       li.appendChild(link)
 
-      console.log(li)
       // Append the created li to the task list
       taskList.appendChild(li)
 
@@ -51,4 +62,37 @@ function addTask(e){
     e.preventDefault()
 }
 
+function removeTask(e){
+   if(e.target.parentElement.classList.contains('delete-item')){
+    e.target.parentElement.parentElement.remove()
+   }
+}
 
+function deleteAllTask(){
+    // Short way to clear the task 
+    // taskList.innerHTML =''
+    // using while loop to clear the task
+
+    while(taskList.firstChild){
+        taskList.removeChild(taskList.firstChild)
+    }
+}
+ 
+
+function filterTask(e){
+      // get the text entered in an input and change to the lowercase
+      const text = e.target.value.toLowerCase()
+     const tasks = document.querySelectorAll('.collection-item').forEach(function(task){
+                 const item = task.firstChild
+     })
+ 
+   
+    
+}
+function displayAlltask(){
+    const allTask =document.querySelectorAll('.collection-item')
+    console.log(allTask.length)
+    for(let i =0;i<allTask.length;i++){
+        console.log(allTask[i].textContent)
+    }
+}
