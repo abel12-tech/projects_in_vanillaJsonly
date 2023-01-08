@@ -82,8 +82,14 @@ function deleteAllTask(){
 function filterTask(e){
       // get the text entered in an input and change to the lowercase
       const text = e.target.value.toLowerCase()
-     const tasks = document.querySelectorAll('.collection-item').forEach(function(task){
-                 const item = task.firstChild
+      document.querySelectorAll('.collection-item').forEach(function(task){
+                 const item = task.firstChild.textContent
+                 if(item.toLowerCase().indexOf(text)!=-1){
+                        task.style.display ='block'
+                 }
+                 else{
+                    task.style.display ='none'
+                 }
      })
  
    
