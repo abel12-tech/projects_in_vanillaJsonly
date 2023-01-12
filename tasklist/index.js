@@ -20,6 +20,8 @@ loadAllEventListeners()
 
 
 function loadAllEventListeners(){
+    // Let add the event listener DOM to load the content in the local storage to the DOM
+    document.addEventListener('DOMContentLoaded',getTasksInLocalStorage)
     // Add task
     form.addEventListener('submit',addTask)
     // Remove task from tasklist
@@ -34,6 +36,7 @@ function loadAllEventListeners(){
    
 }
 function addTask(e){
+    e.preventDefault()
         if(taskInput.value === ''){
             alert('please enter the task')
         }
@@ -54,13 +57,42 @@ function addTask(e){
 
       // Append the created li to the task list
       taskList.appendChild(li)
+      // Let persist the added task when the browser is refresh using the local storage
+       console.log(taskInput.value)
+      persistToLocalStorage(taskInput.value)
 
       // Clear the input after appending the created task to the tasklist(ul)
 
       taskInput.value = ''
      
-    e.preventDefault()
 }
+
+//  Store task to local storage
+function persistToLocalStorage(task){
+    let tasks
+    if((localStorage.getItem('tasks') === null)){
+        tasks = []
+    }
+    else{
+        tasks = JSON.parse(localStorage.getItem('tasks'))
+    }
+    tasks.push(task)
+
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+
+    // Here above the task is added to the local storage but it is uploaded to the document
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function removeTask(e){
    if(e.target.parentElement.classList.contains('delete-item')){
